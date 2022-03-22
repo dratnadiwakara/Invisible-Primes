@@ -1603,8 +1603,6 @@ div.main-container {
   max-width: 100%;
 }
 </style>
-<div id="figure-3" class="section level1">
-<h1><span class="header-section-number">1</span> Figure 3</h1>
 <pre class="r"><code># initialpull &lt;- runQuery(&quot;
 #                   select
 #                     b.user_account_id,
@@ -1703,6 +1701,8 @@ div.main-container {
 # 
 # write_fst(sample1,path=&quot;/home/dimuthu/RFS Initial Submission/cc_default.fst&quot;,compress = 100)</code></pre>
 <pre class="r"><code>sample1 &lt;- read_fst(path=&quot;/home/dimuthu/RFS Initial Submission/cc_default.fst&quot;,as.data.table = T)</code></pre>
+<div id="regression" class="section level1">
+<h1><span class="header-section-number">1</span> Regression</h1>
 <pre class="r"><code>covlabs &lt;- c(&quot;log(Annual income)&quot;,&quot;Age of the borrower&quot;,&quot;Age of the borrower2&quot;,&quot;log(Number of accounts)&quot;,&quot;log(Number of inquiries)&quot;,&quot;log(Total liabilities)&quot;,&quot;log(Credit history)&quot;,&quot;log(No of recently opened accounts)&quot;,&quot;log(Pct. of revolving liabilities)&quot;,&quot;log(Pct. of mortgage liabilities)&quot;,&quot;log(Credit card utilization)&quot;,&quot;log(Pct. trades ever delinquent)&quot;,&quot;log(Loan amount)&quot;)
 
 reg &lt;- list()
@@ -1757,6 +1757,24 @@ stargazer(reg,no.space = T,align = T,omit.stat=c(&quot;ser&quot;, &quot;rsq&quot
 ## N                                         135,563      
 ## Adjusted R2                                0.146       
 ## =======================================================</code></pre>
+</div>
+<div id="auc" class="section level1">
+<h1><span class="header-section-number">2</span> AUC</h1>
+<div id="full-sample" class="section level2">
+<h2><span class="header-section-number">2.1</span> Full Sample</h2>
+<pre class="r"><code>round(roc(ccdel~fico_score,data=sample1[vantage_score&gt;0])$auc[[1]],4)</code></pre>
+<pre><code>## [1] 0.6841</code></pre>
+</div>
+<div id="credit-score-660" class="section level2">
+<h2><span class="header-section-number">2.2</span> Credit score &lt; 660</h2>
+<pre class="r"><code>round(roc(ccdel~fico_score,data=sample1[vantage_score&lt;660])$auc[[1]],4)</code></pre>
+<pre><code>## [1] 0.6683</code></pre>
+</div>
+<div id="credit-score-660-1" class="section level2">
+<h2><span class="header-section-number">2.3</span> Credit score &gt;=660</h2>
+<pre class="r"><code>round(roc(ccdel~fico_score,data=sample1[vantage_score&gt;=660])$auc[[1]],4)</code></pre>
+<pre><code>## [1] 0.607</code></pre>
+</div>
 </div>
 
 
