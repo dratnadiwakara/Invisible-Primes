@@ -6,5 +6,5 @@
 <a href="Below-600-01.html">Credit score 500-600 - Alt. var predictability</a><br/><br/>
 <a href="application-outcomes-01.html">Application outcomes</a><br/><br/>
 <a href="Data-and-or-model-01.html">Data or Model (Upstart vs. Traditional)</a><br/><br/>
-<a href="selection-01.html">Selection (Loan Aggregators)</a><br/><br/>
+<a href="selection-01.html">Selection (Loan Aggregators)</a> | <a href="Upstart-Default-Predictability-Selection-01.html">AUC</a> <br/><br/> 
 
