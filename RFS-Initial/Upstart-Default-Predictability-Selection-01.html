@@ -1731,7 +1731,7 @@ source('/home/dimuthu/Old Oct 2021/functions.R')
 # loans &lt;- loans[!duplicated(loans$upstart_application_id)]</code></pre>
 <pre class="r"><code># loans[,delinquent:=ifelse(loan_contract_id %in% unique(perdata[(loan_status %in% c(&quot;delinquent&quot;,&quot;charged_off&quot;,&quot;partially_charged_off&quot;) ) &amp; seasoning_in_months &lt;=36]$loan_contract_id),1,0)]
 # loans[,delinquent12:=ifelse(loan_contract_id %in% unique(perdata[(loan_status %in% c(&quot;delinquent&quot;,&quot;charged_off&quot;,&quot;partially_charged_off&quot;) ) &amp; seasoning_in_months &lt;=12]$loan_contract_id),1,0)]
-# loans[,delinquent24:=ifelse(loan_contract_id %in% unique(perdata[(loan_status %in% c(&quot;delinquent&quot;,&quot;charged_off&quot;,&quot;partially_charged_off&quot;) ) &amp; seasoning_in_months &lt;=24]$loan_contract_id),1,0)]
+# loans[,delinquent12:=ifelse(loan_contract_id %in% unique(perdata[(loan_status %in% c(&quot;delinquent&quot;,&quot;charged_off&quot;,&quot;partially_charged_off&quot;) ) &amp; seasoning_in_months &lt;=24]$loan_contract_id),1,0)]
 # 
 # loans[,chargedoff:=ifelse(loan_contract_id %in% unique(perdata[loan_status %in% c(&quot;charged_off&quot;,&quot;partially_charged_off&quot;) &amp; seasoning_in_months &lt;=36]$loan_contract_id),1,0)]
 # loans[,chargedoff12:=ifelse(loan_contract_id %in% unique(perdata[loan_status %in% c(&quot;charged_off&quot;,&quot;partially_charged_off&quot;) &amp; seasoning_in_months &lt;=12]$loan_contract_id),1,0)]
@@ -1828,54 +1828,54 @@ covlabs &lt;- c(&quot;log(Annual income)&quot;,&quot;Debt-to-income&quot;,&quot;
 <h2><span class="header-section-number">1.1</span> AUC</h2>
 <div id="loan-aggre." class="section level3">
 <h3><span class="header-section-number">1.1.1</span> Loan Aggre.</h3>
-<pre class="r"><code>roc(delinquent24~fico_score,data=loans[accepted_date&lt;=&quot;2020-03-31&quot; &amp; fico_score&lt;660  &amp; accepted_date&gt;=&quot;2019-01-01&quot; &amp; utm_source2 %in% c(&quot;Lending Tree&quot;,&quot;Nerdwallet&quot;,&quot;The Penny Hoarder&quot;,&quot;Credit Karma&quot;)])</code></pre>
+<pre class="r"><code>roc(delinquent12~fico_score,data=loans[fico_score&lt;660 &amp; accepted_date&lt;=&quot;2020-03-31&quot;  &amp; utm_source2 %in% c(&quot;Lending Tree&quot;,&quot;Nerdwallet&quot;,&quot;The Penny Hoarder&quot;,&quot;Credit Karma&quot;)])</code></pre>
 <pre><code>## 
 ## Call:
-## roc.formula(formula = delinquent24 ~ fico_score, data = loans[accepted_date &lt;=     &quot;2020-03-31&quot; &amp; fico_score &lt; 660 &amp; accepted_date &gt;= &quot;2019-01-01&quot; &amp;     utm_source2 %in% c(&quot;Lending Tree&quot;, &quot;Nerdwallet&quot;, &quot;The Penny Hoarder&quot;,         &quot;Credit Karma&quot;)])
+## roc.formula(formula = delinquent12 ~ fico_score, data = loans[fico_score &lt;     660 &amp; accepted_date &lt;= &quot;2020-03-31&quot; &amp; utm_source2 %in% c(&quot;Lending Tree&quot;,     &quot;Nerdwallet&quot;, &quot;The Penny Hoarder&quot;, &quot;Credit Karma&quot;)])
 ## 
-## Data: fico_score in 42641 controls (delinquent24 0) &lt; 9699 cases (delinquent24 1).
-## Area under the curve: 0.4957</code></pre>
-<pre class="r"><code>roc(delinquent24~default_probability,data=loans[accepted_date&lt;=&quot;2020-03-31&quot; &amp; fico_score&lt;660  &amp; accepted_date&gt;=&quot;2019-01-01&quot; &amp; utm_source2 %in% c(&quot;Lending Tree&quot;,&quot;Nerdwallet&quot;,&quot;The Penny Hoarder&quot;,&quot;Credit Karma&quot;)])</code></pre>
+## Data: fico_score in 67689 controls (delinquent12 0) &gt; 11086 cases (delinquent12 1).
+## Area under the curve: 0.5102</code></pre>
+<pre class="r"><code>roc(delinquent12~default_probability,data=loans[fico_score&lt;660 &amp; accepted_date&lt;=&quot;2020-03-31&quot;  &amp; utm_source2 %in% c(&quot;Lending Tree&quot;,&quot;Nerdwallet&quot;,&quot;The Penny Hoarder&quot;,&quot;Credit Karma&quot;)])</code></pre>
 <pre><code>## 
 ## Call:
-## roc.formula(formula = delinquent24 ~ default_probability, data = loans[accepted_date &lt;=     &quot;2020-03-31&quot; &amp; fico_score &lt; 660 &amp; accepted_date &gt;= &quot;2019-01-01&quot; &amp;     utm_source2 %in% c(&quot;Lending Tree&quot;, &quot;Nerdwallet&quot;, &quot;The Penny Hoarder&quot;,         &quot;Credit Karma&quot;)])
+## roc.formula(formula = delinquent12 ~ default_probability, data = loans[fico_score &lt;     660 &amp; accepted_date &lt;= &quot;2020-03-31&quot; &amp; utm_source2 %in% c(&quot;Lending Tree&quot;,     &quot;Nerdwallet&quot;, &quot;The Penny Hoarder&quot;, &quot;Credit Karma&quot;)])
 ## 
-## Data: default_probability in 42641 controls (delinquent24 0) &lt; 9699 cases (delinquent24 1).
-## Area under the curve: 0.5901</code></pre>
+## Data: default_probability in 67689 controls (delinquent12 0) &lt; 11086 cases (delinquent12 1).
+## Area under the curve: 0.5957</code></pre>
 </div>
 <div id="online-advertiesments" class="section level3">
 <h3><span class="header-section-number">1.1.2</span> Online Advertiesments</h3>
-<pre class="r"><code>roc(delinquent24~fico_score,data=loans[accepted_date&lt;=&quot;2020-03-31&quot; &amp; fico_score&lt;660  &amp; accepted_date&gt;=&quot;2019-01-01&quot; &amp; utm_source2 %in% c(&quot;Facebook&quot;,&quot;Google&quot;)])</code></pre>
+<pre class="r"><code>roc(delinquent12~fico_score,data=loans[fico_score&lt;660 &amp; accepted_date&lt;=&quot;2020-03-31&quot; &amp; accepted_date&gt;=&quot;2019-01-01&quot; &amp; utm_source2 %in% c(&quot;Facebook&quot;,&quot;Google&quot;)])</code></pre>
 <pre><code>## 
 ## Call:
-## roc.formula(formula = delinquent24 ~ fico_score, data = loans[accepted_date &lt;=     &quot;2020-03-31&quot; &amp; fico_score &lt; 660 &amp; accepted_date &gt;= &quot;2019-01-01&quot; &amp;     utm_source2 %in% c(&quot;Facebook&quot;, &quot;Google&quot;)])
+## roc.formula(formula = delinquent12 ~ fico_score, data = loans[fico_score &lt;     660 &amp; accepted_date &lt;= &quot;2020-03-31&quot; &amp; accepted_date &gt;= &quot;2019-01-01&quot; &amp;     utm_source2 %in% c(&quot;Facebook&quot;, &quot;Google&quot;)])
 ## 
-## Data: fico_score in 3398 controls (delinquent24 0) &gt; 879 cases (delinquent24 1).
-## Area under the curve: 0.4987</code></pre>
-<pre class="r"><code>roc(delinquent24~default_probability,data=loans[accepted_date&lt;=&quot;2020-03-31&quot; &amp; fico_score&lt;660  &amp; accepted_date&gt;=&quot;2019-01-01&quot; &amp; utm_source2 %in% c(&quot;Facebook&quot;,&quot;Google&quot;)])</code></pre>
+## Data: fico_score in 3565 controls (delinquent12 0) &gt; 712 cases (delinquent12 1).
+## Area under the curve: 0.5114</code></pre>
+<pre class="r"><code>roc(delinquent12~default_probability,data=loans[fico_score&lt;660 &amp; accepted_date&lt;=&quot;2020-03-31&quot; &amp; utm_source2 %in% c(&quot;Facebook&quot;,&quot;Google&quot;)])</code></pre>
 <pre><code>## 
 ## Call:
-## roc.formula(formula = delinquent24 ~ default_probability, data = loans[accepted_date &lt;=     &quot;2020-03-31&quot; &amp; fico_score &lt; 660 &amp; accepted_date &gt;= &quot;2019-01-01&quot; &amp;     utm_source2 %in% c(&quot;Facebook&quot;, &quot;Google&quot;)])
+## roc.formula(formula = delinquent12 ~ default_probability, data = loans[fico_score &lt;     660 &amp; accepted_date &lt;= &quot;2020-03-31&quot; &amp; utm_source2 %in% c(&quot;Facebook&quot;,     &quot;Google&quot;)])
 ## 
-## Data: default_probability in 3398 controls (delinquent24 0) &lt; 879 cases (delinquent24 1).
-## Area under the curve: 0.5822</code></pre>
+## Data: default_probability in 7727 controls (delinquent12 0) &lt; 1406 cases (delinquent12 1).
+## Area under the curve: 0.6056</code></pre>
 </div>
 <div id="direct" class="section level3">
 <h3><span class="header-section-number">1.1.3</span> Direct</h3>
-<pre class="r"><code>roc(delinquent24~fico_score,data=loans[accepted_date&lt;=&quot;2020-03-31&quot; &amp; fico_score&lt;660  &amp; accepted_date&gt;=&quot;2019-01-01&quot; &amp; utm_source2 %in% c(&quot;Direct&quot;)])</code></pre>
+<pre class="r"><code>roc(delinquent12~fico_score,data=loans[fico_score&lt;660 &amp; accepted_date&lt;=&quot;2020-03-31&quot;  &amp; utm_source2 %in% c(&quot;Direct&quot;)])</code></pre>
 <pre><code>## 
 ## Call:
-## roc.formula(formula = delinquent24 ~ fico_score, data = loans[accepted_date &lt;=     &quot;2020-03-31&quot; &amp; fico_score &lt; 660 &amp; accepted_date &gt;= &quot;2019-01-01&quot; &amp;     utm_source2 %in% c(&quot;Direct&quot;)])
+## roc.formula(formula = delinquent12 ~ fico_score, data = loans[fico_score &lt;     660 &amp; accepted_date &lt;= &quot;2020-03-31&quot; &amp; utm_source2 %in% c(&quot;Direct&quot;)])
 ## 
-## Data: fico_score in 17286 controls (delinquent24 0) &gt; 4451 cases (delinquent24 1).
-## Area under the curve: 0.5158</code></pre>
-<pre class="r"><code>roc(delinquent24~default_probability,data=loans[accepted_date&lt;=&quot;2020-03-31&quot; &amp; fico_score&lt;660  &amp; accepted_date&gt;=&quot;2019-01-01&quot; &amp; utm_source2 %in% c(&quot;Direct&quot;)])</code></pre>
+## Data: fico_score in 29133 controls (delinquent12 0) &gt; 5415 cases (delinquent12 1).
+## Area under the curve: 0.5255</code></pre>
+<pre class="r"><code>roc(delinquent12~default_probability,data=loans[fico_score&lt;660 &amp; accepted_date&lt;=&quot;2020-03-31&quot; &amp;  utm_source2 %in% c(&quot;Direct&quot;)])</code></pre>
 <pre><code>## 
 ## Call:
-## roc.formula(formula = delinquent24 ~ default_probability, data = loans[accepted_date &lt;=     &quot;2020-03-31&quot; &amp; fico_score &lt; 660 &amp; accepted_date &gt;= &quot;2019-01-01&quot; &amp;     utm_source2 %in% c(&quot;Direct&quot;)])
+## roc.formula(formula = delinquent12 ~ default_probability, data = loans[fico_score &lt;     660 &amp; accepted_date &lt;= &quot;2020-03-31&quot; &amp; utm_source2 %in% c(&quot;Direct&quot;)])
 ## 
-## Data: default_probability in 17286 controls (delinquent24 0) &lt; 4451 cases (delinquent24 1).
-## Area under the curve: 0.5958</code></pre>
+## Data: default_probability in 29133 controls (delinquent12 0) &lt; 5415 cases (delinquent12 1).
+## Area under the curve: 0.6038</code></pre>
 </div>
 </div>
 </div>
