@@ -14,3 +14,6 @@
    2. <a href="Bankruptcy-Months-Cutoffs-05.html">RDD: Months since most recent bankruptcy</a> (Cutoff 36 months)
    3. <a href="FICO-cutoffs.html">RKD: Credit score cutoff</a> (Cutoff 600)
    4. <a href="DTI-Cutoff.html">RDD: DTI cutoff</a> (Cutoff 50pct)
+
+**4. Winners vs Losers**<br/>
+   1. <a href="Winners-vs-Losers-03.html">Prelim results</a>
